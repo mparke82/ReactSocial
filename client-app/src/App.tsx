@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import { Header, Icon, List } from 'semantic-ui-react';
 
 function App() {
   // Use state hook from React
@@ -17,18 +18,18 @@ function App() {
 
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ul>
-          {/* JS code inside the curly brackets, map accepts a callback for each element in an array so we can do something with it */}
+    <div>
+      <Header as='h1' icon textAlign='center'>
+        <Icon name='address book outline' circular />
+        <Header.Content>Reactivities</Header.Content>
+      </Header>
+      <List>
           {activities.map((activity: any) => (
-            <li key={activity.id}>
+            <List.Item key={activity.id}>
               {activity.title}
-            </li>
+            </List.Item>
           ))} 
-        </ul>
-      </header>
+      </List>
     </div>
   );
 }
