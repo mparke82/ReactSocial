@@ -39,9 +39,19 @@ namespace API
             {
                 opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
+            // opt = options
+            // This cors is required when trying to access a resource from a different domain
+            // Our client app is on localhost port 3000, and api server is on port 5000
+            // Cors becomes irrelevant after publishing
+            services.AddCors(opt => {
+                opt.AddPolicy("CorsPolicy", policy => {
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Ordering is important in this method
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Check to see that we're in development mode
@@ -56,6 +66,8 @@ namespace API
 
             // When HTTP requests come in from our client, inside this class the router routes to our endpoints inside our controllers
             app.UseRouting(); // route requests to appropriate API controller
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
