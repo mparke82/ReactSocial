@@ -23,5 +23,12 @@ namespace API.Controllers
         {
             return await Mediator.Send(new Details.Query{Id = id});
         }
+
+        // IActionResult gives us access to the HTTP response type
+        [HttpPost]
+        public async Task<IActionResult> CreateActivity(Activity activity)
+        {
+            return Ok(await Mediator.Send(new Create.Command{Activity = activity}));
+        }
     }
 }
