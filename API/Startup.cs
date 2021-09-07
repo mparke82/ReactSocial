@@ -17,6 +17,7 @@ using MediatR;
 using Application.Activities;
 using AutoMapper;
 using Application.Core;
+using API.Extensions;
 
 namespace API
 {
@@ -35,25 +36,7 @@ namespace API
         {
 
             services.AddControllers(); // API projects have API controllers
-            services.AddSwaggerGen(c => // Added by template from microsoft
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
-            services.AddDbContext<DataContext>(opt =>
-            {
-                opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            });
-            // opt = options
-            // This cors is required when trying to access a resource from a different domain
-            // Our client app is on localhost port 3000, and api server is on port 5000
-            // Cors becomes irrelevant after publishing
-            services.AddCors(opt => {
-                opt.AddPolicy("CorsPolicy", policy => {
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
-                });
-            });
-            services.AddMediatR(typeof(List.Handler).Assembly); // Tell Mediator where our handlers are located and which assembly
-            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddApplicationServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
