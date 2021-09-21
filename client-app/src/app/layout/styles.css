@@ -1,0 +1,17 @@
+body {
+ background-color: whitesmoke !important;
+}
+
+.ui.menu {
+  min-height: 6em !important;
+}
+
+.ui.menu .item:before {
+  background: white !important;
+}
+
+ .ui.compact.button{
+  background: white !important;
+  color: palevioletred !important;
+  box-shadow: none !important;
+}
