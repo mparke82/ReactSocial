@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Container, Header, Icon, List } from 'semantic-ui-react';
 import { Activity } from '../models/Activity';
 import NavBar from './NavBar';
+import ActivityDashboard from '../../Features/activities/dashboard/ActivityDashboard';
 
 function App() {
   // Use state hook from React
@@ -15,18 +16,12 @@ function App() {
     })
   }, []) // including this empty array (symbolizing dependencies) ensures this only runs once, and not an endless loop
 
-
+  // we get our activities from the state in the appcomponent
   return (
     <Fragment>
       <NavBar />
       <Container style={{marginTop: '7em'}}>
-        <List>
-            {activities.map(activity => (
-              <List.Item key={activity.id}>
-                {activity.title}
-              </List.Item>
-            ))} 
-        </List>
+        <ActivityDashboard activities={activities}/> 
       </Container>
     </Fragment>
   );
