@@ -8,6 +8,7 @@ import ActivityDashboard from '../../Features/activities/dashboard/ActivityDashb
 function App() {
   // Use state hook from React
   const[activities, setActivities] = useState<Activity[]>([]);// [nameOfVariabletoStoreState, functionToSetState]
+  const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
 
   // Fetch our activities from the API server; use hook Use Effect
   useEffect(() => { // Provide this with a function
@@ -16,12 +17,25 @@ function App() {
     })
   }, []) // including this empty array (symbolizing dependencies) ensures this only runs once, and not an endless loop
 
+  function handleSelectActivity(id: string) {
+    setSelectedActivity(activities.find(x => x.id === id)) // x holds the activity or activities that make up the array
+    // find method runs until it finds a matching acitivity to the id, and then we set it equal to the id
+  }
+
+  function handleCancelSelectActivity() {
+    setSelectedActivity(undefined);
+  }
+
   // we get our activities from the state in the appcomponent
   return (
     <Fragment>
       <NavBar />
       <Container style={{marginTop: '7em'}}>
-        <ActivityDashboard activities={activities}/> 
+        <ActivityDashboard activities={activities}
+        selectedActivity={selectedActivity}
+        selectActivity={handleSelectActivity}
+        cancelSelectActivity={handleCancelSelectActivity}
+        /> 
       </Container>
     </Fragment>
   );
